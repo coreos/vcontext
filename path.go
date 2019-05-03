@@ -29,6 +29,32 @@ func (m Marker) End() int64 {
 	return m.EndIdx
 }
 
+func BuildNewlineList(raw []byte) []int64 {
+	lines := []int64{0}
+	for i, c := range raw {
+		if c == '\n' {
+			lines = append(lines, int64(i))
+		}
+	} 
+	return lines
+}
+
+func offsetToLC(offset int64, lines []int64) (int64, int64) {
+	line := int64(0)
+	for offset > lines[line] {
+		line++
+	}
+	return line, offset - lines[line]
+}
+		
+func (m Marker) StartLC(lines []int64) (int64, int64) {
+	return offsetToLC(m.StartIdx, lines)
+}
+
+func (m Marker) EndLC(lines []int64) (int64, int64) {
+	return offsetToLC(m.EndIdx, lines)
+}
+
 type MapNode struct {
 	Marker
 	Children map[string]Node
