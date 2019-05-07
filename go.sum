@@ -1,2 +1,5 @@
 github.com/ajeddeloh/go-json v0.0.0-20170920214419-6a2fe990e083 h1:uwcvnXW76Y0rHM+qs7y8iHknWUWXYFNlD6FEVhc47TU=
 github.com/ajeddeloh/go-json v0.0.0-20170920214419-6a2fe990e083/go.mod h1:otnto4/Icqn88WCcM4bhIJNSgsh9VLBuspyyCfvof9c=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.0-20190502103701-55513cacd4ae h1:ehhBuCxzgQEGk38YjhFv/97fMIc2JGHZAhAWMmEjmu0=
+gopkg.in/yaml.v3 v3.0.0-20190502103701-55513cacd4ae/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
