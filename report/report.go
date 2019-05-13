@@ -95,3 +95,11 @@ func FromError(c path.ContextPath, err error) Report {
 		},
 	}
 }
+
+func (r *Report) AddOnError(c path.ContextPath, err error) {
+	r.Entries = append(r.Entries, Entry{
+		Message: err.Error(),
+		Context: c,
+		Kind:    Error,
+	})
+}
