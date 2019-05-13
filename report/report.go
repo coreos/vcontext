@@ -47,9 +47,9 @@ type Entry struct {
 func (e Entry) String() string {
 	at := ""
 	switch {
-	case e.Marker != nil && e.Context != nil:
+	case e.Marker.StartP != nil && e.Context != nil:
 		at = fmt.Sprintf("at %s, %s", e.Context.String(), e.Marker.String())
-	case e.Marker != nil:
+	case e.Marker.StartP != nil:
 		at = fmt.Sprintf("at %s", e.Marker.String())
 	case e.Context != nil:
 		at = fmt.Sprintf("at %s", e.Context.String())
