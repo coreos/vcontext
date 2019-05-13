@@ -15,10 +15,8 @@ func UnmarshalToContext(raw []byte) (vcontext.Node, error) {
 }
 
 func fromJsonNode(n json.Node) vcontext.Node {
-	m := vcontext.Marker{
-		StartIdx: int64(n.Start),
-		EndIdx:   int64(n.End),
-	}
+	m := vcontext.MarkerFromIndices(int64(n.Start), int64(n.End))
+
 	switch v := n.Value.(type) {
 	case map[string]json.Node:
 		ret := vcontext.MapNode{
@@ -29,10 +27,7 @@ func fromJsonNode(n json.Node) vcontext.Node {
 		for key, child := range v {
 			ret.Children[key] = fromJsonNode(child)
 			ret.Keys[key] = vcontext.Leaf{
-				Marker: vcontext.Marker{
-					StartIdx: int64(child.KeyStart),
-					EndIdx:   int64(child.KeyEnd),
-				},
+				Marker: vcontext.MarkerFromIndices(int64(child.KeyStart), int64(child.KeyEnd)),
 			}
 		}
 		return ret

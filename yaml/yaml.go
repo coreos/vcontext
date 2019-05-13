@@ -16,7 +16,10 @@ func UnmarshalToContext(raw []byte) (vcontext.Node, error) {
 
 func fromYamlNode(n yaml.Node) vcontext.Node {
 	m := vcontext.Marker{
-		StartIdx: int64(n.Line),
+		StartP: &vcontext.Pos{
+			Line:   int64(n.Line),
+			Column: int64(n.Column),
+		},
 	}
 	switch n.Kind {
 	case 0:
@@ -39,7 +42,10 @@ func fromYamlNode(n yaml.Node) vcontext.Node {
 			value := *n.Content[i+1]
 			ret.Keys[key.Value] = vcontext.Leaf{
 				Marker: vcontext.Marker{
-					StartIdx: int64(key.Line),
+					StartP: &vcontext.Pos{
+						Line:   int64(key.Line),
+						Column: int64(key.Column),
+					},
 				},
 			}
 			ret.Children[key.Value] = fromYamlNode(value)
