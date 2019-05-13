@@ -8,24 +8,37 @@ var (
 	ErrBadPath = errors.New("invalid path")
 )
 
+// superset of Marker
 type Node interface {
-	Start() int64
-	End()   int64
+	Start() (int64, int64) // line, col
+	End()   (int64, int64)
 	Get(path ...interface{}) (Node, error)
 }
 
 type Key string
 
-type Marker struct {
-	StartIdx int64
-	EndIdx   int64
+type Marker interface {
+	Start()  (int64, int64)
+	End()    (int64, int64)
+	String() string
 }
 
-func (m Marker) Start() int64 {
+// IndexMarkers are composed of information regarding the start and
+// end of where a Node exists in its source.
+type IndexMarker struct {
+	StartIdx  int64
+	EndIdx    int64
+	StartLine int64
+	StartCol  int64
+	EndLine   int64
+	EndCol    int64
+}
+
+func (m IndexMarker) Start() int64 {
 	return m.StartIdx
 }
 
-func (m Marker) End() int64 {
+func (m IndexMarker) End() int64 {
 	return m.EndIdx
 }
 
@@ -47,14 +60,6 @@ func offsetToLC(offset int64, lines []int64) (int64, int64) {
 	return line, offset - lines[line]
 }
 		
-func (m Marker) StartLC(lines []int64) (int64, int64) {
-	return offsetToLC(m.StartIdx, lines)
-}
-
-func (m Marker) EndLC(lines []int64) (int64, int64) {
-	return offsetToLC(m.EndIdx, lines)
-}
-
 type MapNode struct {
 	Marker
 	Children map[string]Node
