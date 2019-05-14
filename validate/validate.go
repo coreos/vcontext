@@ -34,7 +34,9 @@ func validate(context path.ContextPath, tag string, v reflect.Value) (r report.R
 	case reflect.Slice:
 		r.Merge(validateSlice(context, tag, v))
 	case reflect.Ptr:
-		r.Merge(validate(context, tag, v.Elem()))
+		if !v.IsNil() {
+			r.Merge(validate(context, tag, v.Elem()))
+		}
 	}
 	
 	return
