@@ -1,12 +1,12 @@
 package json
 
 import (
-	"github.com/ajeddeloh/vcontext"
+	"github.com/ajeddeloh/vcontext/tree"
 
 	"gopkg.in/yaml.v3"
 )
 
-func UnmarshalToContext(raw []byte) (vcontext.Node, error) {
+func UnmarshalToContext(raw []byte) (tree.Node, error) {
 	var ast yaml.Node
 	if err := yaml.Unmarshal(raw, &ast); err != nil {
 		return nil, err
@@ -14,9 +14,9 @@ func UnmarshalToContext(raw []byte) (vcontext.Node, error) {
 	return fromYamlNode(ast), nil
 }
 
-func fromYamlNode(n yaml.Node) vcontext.Node {
-	m := vcontext.Marker{
-		StartP: &vcontext.Pos{
+func fromYamlNode(n yaml.Node) tree.Node {
+	m := tree.Marker{
+		StartP: &tree.Pos{
 			Line:   int64(n.Line),
 			Column: int64(n.Column),
 		},
@@ -31,18 +31,18 @@ func fromYamlNode(n yaml.Node) vcontext.Node {
 		}
 		return fromYamlNode(*n.Content[1])
 	case yaml.MappingNode:
-		ret := vcontext.MapNode{
+		ret := tree.MapNode{
 			Marker: m,
-			Children: make(map[string]vcontext.Node, len(n.Content)/2),
-			Keys:     make(map[string]vcontext.Leaf, len(n.Content)/2),
+			Children: make(map[string]tree.Node, len(n.Content)/2),
+			Keys:     make(map[string]tree.Leaf, len(n.Content)/2),
 		}
 		// MappingNodes list keys and values like [k, v, k, v...]
 		for i := 0; i < len(n.Content); i+=2 {
 			key := *n.Content[i]
 			value := *n.Content[i+1]
-			ret.Keys[key.Value] = vcontext.Leaf{
-				Marker: vcontext.Marker{
-					StartP: &vcontext.Pos{
+			ret.Keys[key.Value] = tree.Leaf{
+				Marker: tree.Marker{
+					StartP: &tree.Pos{
 						Line:   int64(key.Line),
 						Column: int64(key.Column),
 					},
@@ -52,16 +52,16 @@ func fromYamlNode(n yaml.Node) vcontext.Node {
 		}
 		return ret
 	case yaml.SequenceNode:
-		ret := vcontext.SliceNode{
+		ret := tree.SliceNode{
 			Marker: m,
-			Children: make([]vcontext.Node, 0, len(n.Content)),
+			Children: make([]tree.Node, 0, len(n.Content)),
 		}
 		for _, child := range n.Content {
 			ret.Children = append(ret.Children, fromYamlNode(*child))
 		}
 		return ret
 	default: // scalars and aliases
-		return vcontext.Leaf{
+		return tree.Leaf{
 			Marker: m,
 		}
 	}

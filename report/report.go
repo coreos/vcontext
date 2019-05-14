@@ -3,8 +3,8 @@ package report
 import (
 	"fmt"
 
-	"github.com/ajeddeloh/vcontext"
 	"github.com/ajeddeloh/vcontext/path"
+	"github.com/ajeddeloh/vcontext/tree"
 )
 
 type EntryKind interface {
@@ -41,7 +41,7 @@ type Entry struct {
 	Kind    EntryKind
 	Message string
 	Context path.ContextPath
-	Marker  vcontext.Marker
+	Marker  tree.Marker
 }
 
 func (e Entry) String() string {
@@ -83,23 +83,22 @@ func (k Kind) IsFatal() bool {
 	return k == Error
 }
 
-// Helpers
-func FromError(c path.ContextPath, err error) Report {
-	return Report{
-		Entries: []Entry{
-			{
-				Message: err.Error(),
-				Context: c,
-				Kind:    Error,
-			},
-		},
-	}
-}
-
-func (r *Report) AddOnError(c path.ContextPath, err error) {
+func (r *Report) add(c path.ContextPath, err error, k Kind) {
 	r.Entries = append(r.Entries, Entry{
 		Message: err.Error(),
 		Context: c,
-		Kind:    Error,
+		Kind:    k,
 	})
+}
+
+func (r *Report) AddOnError(c path.ContextPath, err error) {
+	r.add(c, err, Error)
+
+}
+func (r *Report) AddOnWarn(c path.ContextPath, err error) {
+	r.add(c, err, Warn)
+}
+
+func (r *Report) AddOnInfo(c path.ContextPath, err error) {
+	r.add(c, err, Info)
 }
