@@ -84,6 +84,9 @@ func (k Kind) IsFatal() bool {
 }
 
 func (r *Report) add(c path.ContextPath, err error, k Kind) {
+	if err == nil {
+		return
+	}
 	r.Entries = append(r.Entries, Entry{
 		Message: err.Error(),
 		Context: c,
