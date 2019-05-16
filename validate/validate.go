@@ -21,6 +21,16 @@ func Validate(thing interface{}, tag string) report.Report {
 }
 
 func validate(context path.ContextPath, tag string, v reflect.Value) (r report.Report) {
+	if !v.IsValid() {
+		return
+	}
+	if v.Kind() == reflect.Interface {
+		if v.IsNil() {
+			return
+		} else {
+			v = makeConcrete(v)
+		}
+	}
 	// first check if this object has Validate(context) defined, but only on value
 	// recievers. Both pointer and value receivers satisfy a value receiver interface
 	// so ensure we're not a pointer too.
