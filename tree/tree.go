@@ -13,7 +13,7 @@ var (
 // superset of Marker
 type Node interface {
 	Start() (int64, int64) // line, col
-	End()   (int64, int64)
+	End() (int64, int64)
 	Get(path []interface{}) (Node, error)
 	GetMarker() Marker
 	pos() []*Pos // just used for iterating through the markers to fill in line and column from index

@@ -22,7 +22,7 @@ func fromJsonNode(n json.Node) tree.Node {
 	switch v := n.Value.(type) {
 	case map[string]json.Node:
 		ret := tree.MapNode{
-			Marker: m,
+			Marker:   m,
 			Children: make(map[string]tree.Node, len(v)),
 			Keys:     make(map[string]tree.Leaf, len(v)),
 		}
@@ -35,7 +35,7 @@ func fromJsonNode(n json.Node) tree.Node {
 		return ret
 	case []json.Node:
 		ret := tree.SliceNode{
-			Marker: m,
+			Marker:   m,
 			Children: make([]tree.Node, 0, len(v)),
 		}
 		for _, child := range v {
@@ -48,4 +48,3 @@ func fromJsonNode(n json.Node) tree.Node {
 		}
 	}
 }
-

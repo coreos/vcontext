@@ -20,7 +20,7 @@ func (r *Report) Merge(child Report) {
 	r.Entries = append(r.Entries, child.Entries...)
 }
 
-// getDeepestNode 
+// getDeepestNode returns the deepest node matching the context.
 func getDeepestNode(n tree.Node, c path.ContextPath) tree.Node {
 	if child, err := n.Get(c); err != nil {
 		return getDeepestNode(n, c[:len(c)-1])
@@ -48,7 +48,7 @@ func (r Report) IsFatal() bool {
 func (r Report) String() string {
 	str := ""
 	for _, e := range r.Entries {
-		str += e.String() + "\n" 
+		str += e.String() + "\n"
 	}
 	return str
 }
