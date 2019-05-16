@@ -11,7 +11,9 @@ func UnmarshalToContext(raw []byte) (tree.Node, error) {
 	if err := json.Unmarshal(raw, &ast); err != nil {
 		return nil, err
 	}
-	return fromJsonNode(ast), nil
+	node := fromJsonNode(ast)
+	tree.FixLineColumn(node, raw)
+	return node, nil
 }
 
 func fromJsonNode(n json.Node) tree.Node {
