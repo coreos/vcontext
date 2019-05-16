@@ -38,7 +38,7 @@ func validate(context path.ContextPath, tag string, v reflect.Value) (r report.R
 			r.Merge(validate(context, tag, v.Elem()))
 		}
 	}
-	
+
 	return
 }
 

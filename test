@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+echo "checking gofmt"
+res=$(gofmt -d .)
+echo "$res"
+test -z "$res"
+
+echo "running tests"
+for pkg in $(go list ./...)
+do
+	go test $pkg
+done

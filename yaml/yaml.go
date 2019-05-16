@@ -32,12 +32,12 @@ func fromYamlNode(n yaml.Node) tree.Node {
 		return fromYamlNode(*n.Content[1])
 	case yaml.MappingNode:
 		ret := tree.MapNode{
-			Marker: m,
+			Marker:   m,
 			Children: make(map[string]tree.Node, len(n.Content)/2),
 			Keys:     make(map[string]tree.Leaf, len(n.Content)/2),
 		}
 		// MappingNodes list keys and values like [k, v, k, v...]
-		for i := 0; i < len(n.Content); i+=2 {
+		for i := 0; i < len(n.Content); i += 2 {
 			key := *n.Content[i]
 			value := *n.Content[i+1]
 			ret.Keys[key.Value] = tree.Leaf{
@@ -53,7 +53,7 @@ func fromYamlNode(n yaml.Node) tree.Node {
 		return ret
 	case yaml.SequenceNode:
 		ret := tree.SliceNode{
-			Marker: m,
+			Marker:   m,
 			Children: make([]tree.Node, 0, len(n.Content)),
 		}
 		for _, child := range n.Content {
@@ -66,4 +66,3 @@ func fromYamlNode(n yaml.Node) tree.Node {
 		}
 	}
 }
-
