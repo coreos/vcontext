@@ -23,7 +23,7 @@ func (r *Report) Merge(child Report) {
 // getDeepestNode 
 func getDeepestNode(n tree.Node, c path.ContextPath) tree.Node {
 	if child, err := n.Get(c); err != nil {
-		return getDeepestNode(n, c[0:len(c)-1])
+		return getDeepestNode(n, c[:len(c)-1])
 	} else {
 		return child
 	}

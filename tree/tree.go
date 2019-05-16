@@ -14,7 +14,7 @@ var (
 type Node interface {
 	Start() (int64, int64) // line, col
 	End()   (int64, int64)
-	Get(path ...interface{}) (Node, error)
+	Get(path []interface{}) (Node, error)
 	GetMarker() Marker
 	pos() []*Pos // just used for iterating through the markers to fill in line and column from index
 }
@@ -109,20 +109,20 @@ type MapNode struct {
 	Keys     map[string]Leaf
 }
 
-func (m MapNode) Get(path ...interface{}) (Node, error) {
+func (m MapNode) Get(path []interface{}) (Node, error) {
 	if len(path) == 0 {
 		return m, nil
 	}
 	switch p := path[0].(type) {
 	case string:
 		if r, ok := m.Children[p]; ok {
-			return r.Get(path[1:]...)
+			return r.Get(path[1:])
 		} else {
 			return nil, ErrBadPath
 		}
 	case Key:
 		if r, ok := m.Keys[string(p)]; ok {
-			return r.Get(path[1:]...)
+			return r.Get(path[1:])
 		} else {
 			return nil, ErrBadPath
 		}
@@ -151,7 +151,7 @@ func (l Leaf) pos() []*Pos {
 	return appendPos(appendPos(nil, l.StartP), l.EndP)
 }
 
-func (k Leaf) Get(path ...interface{}) (Node, error) {
+func (k Leaf) Get(path []interface{}) (Node, error) {
 	if len(path) == 0 {
 		return k, nil
 	}
@@ -163,7 +163,7 @@ type SliceNode struct {
 	Children []Node
 }
 
-func (s SliceNode) Get(path ...interface{}) (Node, error) {
+func (s SliceNode) Get(path []interface{}) (Node, error) {
 	if len(path) == 0 {
 		return s, nil
 	}
@@ -171,7 +171,7 @@ func (s SliceNode) Get(path ...interface{}) (Node, error) {
 		if i >= len(s.Children) {
 			return nil, ErrBadPath
 		}
-		return s.Children[i].Get(path[1:]...)
+		return s.Children[i].Get(path[1:])
 	}
 	return nil, ErrBadPath
 }
