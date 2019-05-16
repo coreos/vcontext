@@ -27,6 +27,9 @@ func FixLineColumn(n Node, source []byte) {
 	pi := 0
 	line, col := int64(1), int64(1)
 	for i, c := range source {
+		if pi == len(p) {
+			return
+		}
 		if int64(i) == p[pi].Index {
 			p[pi].Line = line
 			p[pi].Column = col
@@ -90,10 +93,14 @@ func (marker Marker) GetMarker() Marker {
 }
 
 func MarkerFromIndices(start, end int64) Marker {
-	return Marker{
-		StartP: &Pos{Index: start},
-		EndP:   &Pos{Index: end},
+	m := Marker{}
+	if start >= 0 {
+		m.StartP = &Pos{Index: start}
 	}
+	if end >= 0 {
+		m.EndP = &Pos{Index: end}
+	}
+	return m
 }
 
 func appendPos(l []*Pos, p *Pos) []*Pos {
