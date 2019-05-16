@@ -20,16 +20,20 @@ func (r *Report) Merge(child Report) {
 	r.Entries = append(r.Entries, child.Entries...)
 }
 
-// Correlate takes a node tree and populates the markers
-func (r *Report) Correlate(n tree.Node) error {
-	for i, e := range r.Entries {
-		node, err := n.Get(e.Context)
-		if err != nil {
-			return err
-		}
-		r.Entries[i].Marker = node.GetMarker()
+// getDeepestNode 
+func getDeepestNode(n tree.Node, c path.ContextPath) tree.Node {
+	if child, err := n.Get(c); err != nil {
+		return getDeepestNode(n, c[0:len(c)-1])
+	} else {
+		return child
 	}
-	return nil
+}
+
+// Correlate takes a node tree and populates the markers
+func (r *Report) Correlate(n tree.Node) {
+	for i, e := range r.Entries {
+		r.Entries[i].Marker = getDeepestNode(n, e.Context).GetMarker()
+	}
 }
 
 func (r Report) IsFatal() bool {
