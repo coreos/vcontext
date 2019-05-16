@@ -9,5 +9,5 @@ test -z "$res"
 echo "running tests"
 for pkg in $(go list ./...)
 do
-	go test $pkg
+	go test $pkg -cover
 done
