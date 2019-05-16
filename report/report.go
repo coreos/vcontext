@@ -20,6 +20,18 @@ func (r *Report) Merge(child Report) {
 	r.Entries = append(r.Entries, child.Entries...)
 }
 
+// Correlate takes a node tree and populates the markers
+func (r *Report) Correlate(n tree.Node) error {
+	for i, e := range r.Entries {
+		node, err := n.Get(e.Context)
+		if err != nil {
+			return err
+		}
+		r.Entries[i].Marker = node.GetMarker()
+	}
+	return nil
+}
+
 func (r Report) IsFatal() bool {
 	for _, e := range r.Entries {
 		if e.Kind.IsFatal() {

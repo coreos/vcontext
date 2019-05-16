@@ -15,6 +15,7 @@ type Node interface {
 	Start() (int64, int64) // line, col
 	End()   (int64, int64)
 	Get(path ...interface{}) (Node, error)
+	GetMarker() Marker
 	pos() []*Pos // just used for iterating through the markers to fill in line and column from index
 }
 
@@ -82,6 +83,10 @@ func (m Marker) End() (int64, int64) {
 func (m Marker) String() string {
 	// Just do start for now, figure out end later
 	return posString(m.StartP)
+}
+
+func (marker Marker) GetMarker() Marker {
+	return marker
 }
 
 func MarkerFromIndices(start, end int64) Marker {
