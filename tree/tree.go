@@ -34,7 +34,10 @@ type Node interface {
 }
 
 func FixLineColumn(n Node, source []byte) {
-	p := n.pos()
+	fixLineColumn(n.pos(), source)
+}
+
+func fixLineColumn(p []*Pos, source []byte) {
 	sort.Slice(p, func(i, j int) bool {
 		return p[i].Index < p[j].Index
 	})
