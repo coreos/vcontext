@@ -26,10 +26,11 @@ func TestFixLineColumn(t *testing.T) {
 		out [][]int64 //list of index, line, col
 	}{
 		{
-			in:  []int64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
+			in:  []int64{0, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 			src: "01\n3\n567\n9",
 			out: [][]int64{
 				{0, 1, 1},
+				{1, 1, 2},
 				{1, 1, 2},
 				{2, 1, 3},
 				{3, 2, 1},
