@@ -47,10 +47,13 @@ func fixLineColumn(p []*Pos, source []byte) {
 		if pi == len(p) {
 			return
 		}
-		if int64(i) == p[pi].Index {
+		for int64(i) == p[pi].Index {
 			p[pi].Line = line
 			p[pi].Column = col
 			pi++
+			if pi == len(p) {
+				return
+			}
 		}
 		col++
 		if c == '\n' {
