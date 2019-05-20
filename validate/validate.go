@@ -31,10 +31,11 @@ func Validate(thing interface{}, tag string) report.Report {
 		return report.Report{}
 	}
 	v := reflect.ValueOf(thing)
-	return validate(nil, tag, v)
+	ctx := path.ContextPath{Tag: tag}
+	return validate(ctx, v)
 }
 
-func validate(context path.ContextPath, tag string, v reflect.Value) (r report.Report) {
+func validate(context path.ContextPath, v reflect.Value) (r report.Report) {
 	if !v.IsValid() {
 		return
 	}
@@ -54,12 +55,12 @@ func validate(context path.ContextPath, tag string, v reflect.Value) (r report.R
 
 	switch v.Kind() {
 	case reflect.Struct:
-		r.Merge(validateStruct(context, tag, v))
+		r.Merge(validateStruct(context, v))
 	case reflect.Slice:
-		r.Merge(validateSlice(context, tag, v))
+		r.Merge(validateSlice(context, v))
 	case reflect.Ptr:
 		if !v.IsNil() {
-			r.Merge(validate(context, tag, v.Elem()))
+			r.Merge(validate(context, v.Elem()))
 		}
 	}
 
@@ -107,19 +108,19 @@ func fieldName(s structField, tag string) string {
 	return strings.Split(tag, ",")[0]
 }
 
-func validateStruct(context path.ContextPath, tag string, v reflect.Value) (r report.Report) {
+func validateStruct(context path.ContextPath, v reflect.Value) (r report.Report) {
 	fields := getFields(v)
 	for _, field := range fields {
-		fieldContext := append(context, fieldName(field, tag))
-		r.Merge(validate(fieldContext, tag, field.Value))
+		fieldContext := context.Append(fieldName(field, context.Tag))
+		r.Merge(validate(fieldContext, field.Value))
 	}
 	return
 }
 
-func validateSlice(context path.ContextPath, tag string, v reflect.Value) (r report.Report) {
+func validateSlice(context path.ContextPath, v reflect.Value) (r report.Report) {
 	for i := 0; i < v.Len(); i++ {
-		childContext := append(context, i)
-		r.Merge(validate(childContext, tag, v.Index(i)))
+		childContext := context.Append(i)
+		r.Merge(validate(childContext, v.Index(i)))
 	}
 	return
 }

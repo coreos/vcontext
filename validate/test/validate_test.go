@@ -33,8 +33,11 @@ var (
 	dummy = errors.New("dummy")
 )
 
-func fromSingleError(c path.ContextPath, err error) (r report.Report) {
-	r.AddOnError(c, err)
+func fromSingleError(c []interface{}, err error) (r report.Report) {
+	ctx := path.ContextPath{
+		Path: c,
+	}
+	r.AddOnError(ctx, err)
 	return
 }
 
@@ -173,6 +176,10 @@ func TestValidate(t *testing.T) {
 	}
 	for i, test := range tests {
 		expected := test.out
+		for i, _ := range test.out.Entries {
+			test.out.Entries[i].Context.Tag = test.src
+		}
+
 		actual := validate.Validate(test.in, test.src)
 		if !reflect.DeepEqual(expected, actual) {
 			t.Errorf("Fail %da: expected %+v got %+v", i, expected, actual)
