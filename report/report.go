@@ -37,7 +37,7 @@ func (r *Report) Merge(child Report) {
 // getDeepestNode returns the deepest node matching the context.
 func getDeepestNode(n tree.Node, c path.ContextPath) tree.Node {
 	if child, err := n.Get(c); err != nil {
-		return getDeepestNode(n, c[:len(c)-1])
+		return getDeepestNode(n, c.Pop())
 	} else {
 		return child
 	}
@@ -77,11 +77,11 @@ type Entry struct {
 func (e Entry) String() string {
 	at := ""
 	switch {
-	case e.Marker.StartP != nil && e.Context != nil:
+	case e.Marker.StartP != nil && e.Context.Len() != 0:
 		at = fmt.Sprintf("at %s, %s", e.Context.String(), e.Marker.String())
 	case e.Marker.StartP != nil:
 		at = fmt.Sprintf("at %s", e.Marker.String())
-	case e.Context != nil:
+	case e.Context.Len() != 0:
 		at = fmt.Sprintf("at %s", e.Context.String())
 	}
 
