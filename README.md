@@ -1,10 +1,10 @@
 ## vcontext: Validation with context
 
 vcontext is a library supporting validation of config files parsed from yaml or json with support for giving context as
-to where errors occur. It is composed of multiple semi-indepedent packages:
+to where errors occur. It is composed of multiple semi-independent packages:
 
  - report: a structure for containing multiple errors, warnings, etc. It also contains context (from the path package)
-   for determining where in the config the reports came from (e.g. `$.foo.baz.4.quux`) 
+   for determining where in the config the reports came from (e.g. `$.foo.baz.4.quux`)
  - validate: a package for composing a report by validating go structs.
  - tree: a structure for containing metadata about the location (line/column) of objects in the source of the config
  - json, yaml: packages for generating trees from json or yaml
@@ -12,7 +12,7 @@ to where errors occur. It is composed of multiple semi-indepedent packages:
 
 ### Usage:
 
-Validating a config generally involves:
+Validating a config generally involves the following steps:
 1) Unmarshal the yaml or json to a go struct, handle any syntax/type errors
 1) Generate a report by running validate.Validate(yourConfigStruct)
 1) Generate a tree of line/column metadata with [json|yaml].UnmarshalToContext()
@@ -33,13 +33,13 @@ where problems occur.
 Example:
 ```go
 type MyStruct struct {
-	MustBePositive int `json:"mustBePosistive"`
+	MustBePositive int `json:"mustBePositive"`
 }
 
 func (m MyStruct) Validate(c path.ContextPath) (r report.Report) {
 	if m.MustBePositive <= 0 {
 		// append the json tag so the report specifies that field is invalid, not the whole struct
-		r.AddOnError(append(c, "mustBePositive"), errors.New("mustBePositive was not positive"))
+		r.AddOnError(c.Append("mustBePositive"), errors.New("mustBePositive was not positive"))
 	}
 	return
 }
