@@ -26,7 +26,7 @@ var (
 	ErrBadPath = errors.New("invalid path")
 )
 
-// superset of Marker
+// Node is generic representation of a json or yaml node.
 type Node interface {
 	Start() (int64, int64) // line, col
 	End() (int64, int64)
@@ -35,6 +35,7 @@ type Node interface {
 	pos() []*Pos // just used for iterating through the markers to fill in line and column from index
 }
 
+// FixLineColumn populates the Line and Column of nodes that only have Index set.
 func FixLineColumn(n Node, source []byte) {
 	fixLineColumn(n.pos(), source)
 }
@@ -69,6 +70,7 @@ func fixLineColumn(p []*Pos, source []byte) {
 // a key starts and where a value starts.
 type Key string
 
+// Pos represents a single location in a string
 type Pos struct {
 	Index  int64
 	Line   int64
@@ -89,9 +91,8 @@ func posLC(p *Pos) (int64, int64) {
 	return p.Line, p.Column
 }
 
-// IndexMarkers are composed of information regarding the start and
-// end of where a Node exists in its source. Depending on where the marker
-// came from (e.g. json or yaml) the *Idx or End* fields may not be populated.
+// Markers are composed of information regarding the start and
+// end of where a Node exists in its source.
 type Marker struct {
 	StartP *Pos
 	EndP   *Pos
