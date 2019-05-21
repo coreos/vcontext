@@ -24,6 +24,15 @@ type ContextPath struct {
 	Tag  string
 }
 
+// New returns a new ContextPath with the given tag and path. It's a helper since go's
+// literal syntax is quite verbose, especially with []interface{}{...}
+func New(tag string, path ...interface{}) ContextPath {
+	return ContextPath{
+		Tag:  tag,
+		Path: path,
+	}
+}
+
 func (c ContextPath) String() string {
 	strs := []string{"$"}
 	for _, e := range c.Path {
