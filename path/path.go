@@ -39,7 +39,7 @@ func (c ContextPath) Append(e ...interface{}) ContextPath {
 	}
 }
 
-// Head returns the first element in the path, panics is empty.
+// Head returns the first element in the path, panics if empty.
 func (c ContextPath) Head() interface{} {
 	return c.Path[0]
 }
