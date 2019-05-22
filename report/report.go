@@ -125,7 +125,7 @@ func (k Kind) IsFatal() bool {
 	return k == Error
 }
 
-func (r *Report) add(c path.ContextPath, err error, k Kind) {
+func (r *Report) AddOn(c path.ContextPath, err error, k EntryKind) {
 	if err == nil {
 		return
 	}
@@ -138,16 +138,16 @@ func (r *Report) add(c path.ContextPath, err error, k Kind) {
 
 // AddOnError adds err to report with kind "Error" if err is not nil
 func (r *Report) AddOnError(c path.ContextPath, err error) {
-	r.add(c, err, Error)
+	r.AddOn(c, err, Error)
 
 }
 
 // AddOnWarn adds err to report with kind "Warning" if err is not nil
 func (r *Report) AddOnWarn(c path.ContextPath, err error) {
-	r.add(c, err, Warn)
+	r.AddOn(c, err, Warn)
 }
 
 // AddOnInfo adds err to report with kind "Info" if err is not nil
 func (r *Report) AddOnInfo(c path.ContextPath, err error) {
-	r.add(c, err, Info)
+	r.AddOn(c, err, Info)
 }
