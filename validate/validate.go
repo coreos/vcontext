@@ -87,7 +87,7 @@ func validate(context path.ContextPath, v reflect.Value, validateFunc CustomVali
 	return
 }
 
-// StructField is an extension of go's reflect.StructField that also includes the value
+// StructField is an extension of go's reflect.StructField that also includes the value.
 type StructField struct {
 	reflect.StructField
 	Value reflect.Value
@@ -95,7 +95,7 @@ type StructField struct {
 
 // makeConcrete takes a value and if it is a value of an interface returns the
 // value of the actual underlying type implementing that interface. If the value
-// is already concrete, it returns the same value
+// is already concrete, it returns the same value.
 func makeConcrete(v reflect.Value) reflect.Value {
 	return reflect.ValueOf(v.Interface())
 }
