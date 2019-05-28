@@ -117,7 +117,7 @@ func (k Kind) String() string {
 	case Info:
 		return "info"
 	default:
-		return ""
+		return "unknown severity"
 	}
 }
 
