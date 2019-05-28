@@ -101,7 +101,7 @@ func makeConcrete(v reflect.Value) reflect.Value {
 }
 
 // GetFields takes a value of a struct and flattens all embedded structs in it.
-// If any fields are interfaces, it "dereferences" them interface to the underlying type.
+// If any fields are interfaces, it "dereferences" the interface to its underlying type.
 func GetFields(v reflect.Value) []StructField {
 	ret := []StructField{}
 	if v.Kind() != reflect.Struct {
