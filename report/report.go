@@ -89,14 +89,14 @@ func (e Entry) String() string {
 	at := ""
 	switch {
 	case e.Marker.StartP != nil && e.Context.Len() != 0:
-		at = fmt.Sprintf("at %s, %s", e.Context.String(), e.Marker.String())
+		at = fmt.Sprintf(" at %s, %s", e.Context.String(), e.Marker.String())
 	case e.Marker.StartP != nil:
-		at = fmt.Sprintf("at %s", e.Marker.String())
+		at = fmt.Sprintf(" at %s", e.Marker.String())
 	case e.Context.Len() != 0:
-		at = fmt.Sprintf("at %s", e.Context.String())
+		at = fmt.Sprintf(" at %s", e.Context.String())
 	}
 
-	return fmt.Sprintf("%s %s: %s", e.Kind.String(), at, e.Message)
+	return fmt.Sprintf("%s%s: %s", e.Kind.String(), at, e.Message)
 }
 
 // Kind is a default set of EntryKind.
