@@ -17,8 +17,8 @@ package report
 import (
 	"fmt"
 
-	"github.com/ajeddeloh/vcontext/path"
-	"github.com/ajeddeloh/vcontext/tree"
+	"github.com/coreos/vcontext/path"
+	"github.com/coreos/vcontext/tree"
 )
 
 // EntryKind represents an Entry's severity.

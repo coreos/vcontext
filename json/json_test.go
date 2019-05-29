@@ -18,7 +18,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ajeddeloh/vcontext/tree"
+	"github.com/coreos/vcontext/tree"
 
 	json "github.com/ajeddeloh/go-json"
 )

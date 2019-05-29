@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/ajeddeloh/vcontext/path"
+	"github.com/coreos/vcontext/path"
 )
 
 var (

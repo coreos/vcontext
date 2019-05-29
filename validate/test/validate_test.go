@@ -19,9 +19,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ajeddeloh/vcontext/path"
-	"github.com/ajeddeloh/vcontext/report"
-	"github.com/ajeddeloh/vcontext/validate"
+	"github.com/coreos/vcontext/path"
+	"github.com/coreos/vcontext/report"
+	"github.com/coreos/vcontext/validate"
 )
 
 // Why are these tests in their own package?

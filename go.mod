@@ -1,4 +1,4 @@
-module github.com/ajeddeloh/vcontext
+module github.com/coreos/vcontext
 
 go 1.11
 
