@@ -15,7 +15,7 @@
 package json
 
 import (
-	"github.com/ajeddeloh/vcontext/tree"
+	"github.com/coreos/vcontext/tree"
 
 	"gopkg.in/yaml.v3"
 )

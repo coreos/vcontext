@@ -18,8 +18,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/ajeddeloh/vcontext/path"
-	"github.com/ajeddeloh/vcontext/report"
+	"github.com/coreos/vcontext/path"
+	"github.com/coreos/vcontext/report"
 )
 
 type CustomValidator func(v reflect.Value, c path.ContextPath) report.Report
