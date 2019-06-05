@@ -43,7 +43,7 @@ func fromYamlNode(n yaml.Node) tree.Node {
 		if len(n.Content) == 0 {
 			return nil
 		}
-		return fromYamlNode(*n.Content[1])
+		return fromYamlNode(*n.Content[0])
 	case yaml.MappingNode:
 		ret := tree.MapNode{
 			Marker:   m,
