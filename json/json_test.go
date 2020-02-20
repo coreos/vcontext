@@ -20,7 +20,7 @@ import (
 
 	"github.com/coreos/vcontext/tree"
 
-	json "github.com/ajeddeloh/go-json"
+	json "github.com/coreos/go-json"
 )
 
 func TestUnmarshalToContext(t *testing.T) {
