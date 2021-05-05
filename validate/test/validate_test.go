@@ -176,7 +176,7 @@ func TestValidate(t *testing.T) {
 	}
 	for i, test := range tests {
 		expected := test.out
-		for i, _ := range test.out.Entries {
+		for i := range test.out.Entries {
 			test.out.Entries[i].Context.Tag = test.src
 		}
 
