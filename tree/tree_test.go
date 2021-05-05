@@ -45,7 +45,7 @@ func TestFixLineColumn(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		p := make([]*Pos, len(test.in), len(test.in))
+		p := make([]*Pos, len(test.in))
 		expected := make(map[int64]Pos, len(test.in))
 		for j, index := range test.in {
 			p[j] = &Pos{Index: index}

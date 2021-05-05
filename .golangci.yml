@@ -1,0 +1,5 @@
+issues:
+  exclude-rules:
+    # Intentional garbage JSON option
+    - path: validate/test/validate_test\.go$
+      text: "SA5008:"

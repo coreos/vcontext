@@ -70,21 +70,21 @@ func TestUnmarshalToContext(t *testing.T) {
 				Start: 1,
 				End:   2,
 				Value: map[string]json.Node{
-					"foo": json.Node{
+					"foo": {
 						KeyStart: 3,
 						KeyEnd:   4,
 						Start:    5,
 						End:      6,
 						Value:    map[string]json.Node{},
 					},
-					"bar": json.Node{
+					"bar": {
 						KeyStart: 7,
 						KeyEnd:   8,
 						Start:    9,
 						End:      10,
 						Value:    []json.Node{},
 					},
-					"baz": json.Node{
+					"baz": {
 						KeyStart: 11,
 						KeyEnd:   12,
 						Start:    13,
@@ -96,13 +96,13 @@ func TestUnmarshalToContext(t *testing.T) {
 			tree.MapNode{
 				Marker: tree.MarkerFromIndices(1, 2),
 				Keys: map[string]tree.Leaf{
-					"foo": tree.Leaf{
+					"foo": {
 						Marker: tree.MarkerFromIndices(3, 4),
 					},
-					"bar": tree.Leaf{
+					"bar": {
 						Marker: tree.MarkerFromIndices(7, 8),
 					},
-					"baz": tree.Leaf{
+					"baz": {
 						Marker: tree.MarkerFromIndices(11, 12),
 					},
 				},
@@ -128,7 +128,7 @@ func TestUnmarshalToContext(t *testing.T) {
 				Start: 1,
 				End:   2,
 				Value: []json.Node{
-					json.Node{
+					{
 						Start: 3,
 						End:   4,
 						Value: "foo",
@@ -150,7 +150,7 @@ func TestUnmarshalToContext(t *testing.T) {
 				Start: 1,
 				End:   2,
 				Value: []json.Node{
-					json.Node{
+					{
 						Start: 3,
 						End:   4,
 						Value: []json.Node{},
@@ -173,7 +173,7 @@ func TestUnmarshalToContext(t *testing.T) {
 				Start: 1,
 				End:   2,
 				Value: []json.Node{
-					json.Node{
+					{
 						Start: 3,
 						End:   4,
 						Value: map[string]json.Node{},
