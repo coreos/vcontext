@@ -9,7 +9,7 @@ By contributing to this project you agree to the Developer Certificate of Origin
 # Email and Chat
 
 The project currently uses the Fedora CoreOS IRC channel:
-- IRC: #[fedora-coreos](irc://irc.freenode.org:6667/#fedora-coreos) IRC channel on freenode.org
+- IRC: #[fedora-coreos](ircs://irc.libera.chat:6697/#fedora-coreos) IRC channel on libera.chat
 
 Please avoid emailing maintainers found in the MAINTAINERS file directly. They are very busy and read IRC.
 
