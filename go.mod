@@ -1,6 +1,6 @@
 module github.com/coreos/vcontext
 
-go 1.15
+go 1.17
 
 require (
 	github.com/coreos/go-json v0.0.0-20211020211907-c63f628265de
