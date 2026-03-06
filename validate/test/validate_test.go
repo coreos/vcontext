@@ -30,7 +30,7 @@ import (
 // included in the exported package that people use.
 
 var (
-	dummy = errors.New("dummy")
+	errDummy = errors.New("dummy")
 )
 
 func fromSingleError(c []interface{}, err error) (r report.Report) {
@@ -50,7 +50,7 @@ func (t Test1) Validate(c path.ContextPath) (r report.Report) {
 type Test2 struct{}
 
 func (t Test2) Validate(c path.ContextPath) (r report.Report) {
-	r.AddOnError(c, dummy)
+	r.AddOnError(c, errDummy)
 	return
 }
 
@@ -95,83 +95,83 @@ func TestValidate(t *testing.T) {
 		},
 		{
 			in:  Test2{},
-			out: fromSingleError(nil, dummy),
+			out: fromSingleError(nil, errDummy),
 		},
 		{
 			in:  Test3{},
-			out: fromSingleError([]interface{}{"Foo"}, dummy),
+			out: fromSingleError([]interface{}{"Foo"}, errDummy),
 		},
 		{
 			in:  Test3{},
 			src: "json",
-			out: fromSingleError([]interface{}{"json"}, dummy),
+			out: fromSingleError([]interface{}{"json"}, errDummy),
 		},
 		{
 			in:  Test3{},
 			src: "yaml",
-			out: fromSingleError([]interface{}{"yaml"}, dummy),
+			out: fromSingleError([]interface{}{"yaml"}, errDummy),
 		},
 		{
 			in:  Test4{},
-			out: fromSingleError(nil, dummy),
+			out: fromSingleError(nil, errDummy),
 		},
 		{
 			in:  Test4{},
 			src: "json",
-			out: fromSingleError(nil, dummy),
+			out: fromSingleError(nil, errDummy),
 		},
 		{
 			in:  Test4{},
 			src: "yaml",
-			out: fromSingleError(nil, dummy),
+			out: fromSingleError(nil, errDummy),
 		},
 		{
 			in:  Test5{},
-			out: fromSingleError([]interface{}{"Bar", "Foo"}, dummy),
+			out: fromSingleError([]interface{}{"Bar", "Foo"}, errDummy),
 		},
 		{
 			in:  Test5{},
 			src: "json",
-			out: fromSingleError([]interface{}{"json2", "json"}, dummy),
+			out: fromSingleError([]interface{}{"json2", "json"}, errDummy),
 		},
 		{
 			in:  Test5{},
 			src: "yaml",
-			out: fromSingleError([]interface{}{"yaml2", "yaml"}, dummy),
+			out: fromSingleError([]interface{}{"yaml2", "yaml"}, errDummy),
 		},
 		{
 			in: Test6{},
 		},
 		{
 			in:  Test6{Bar: new(Test3)},
-			out: fromSingleError([]interface{}{"Bar", "Foo"}, dummy),
+			out: fromSingleError([]interface{}{"Bar", "Foo"}, errDummy),
 		},
 		{
 			in:  Test6{Bar: new(Test3)},
 			src: "json",
-			out: fromSingleError([]interface{}{"json2", "json"}, dummy),
+			out: fromSingleError([]interface{}{"json2", "json"}, errDummy),
 		},
 		{
 			in:  Test6{Bar: new(Test3)},
 			src: "yaml",
-			out: fromSingleError([]interface{}{"yaml2", "yaml"}, dummy),
+			out: fromSingleError([]interface{}{"yaml2", "yaml"}, errDummy),
 		},
 		{
 			in: Test7{},
 		},
 		{
 			in:  Test7{Bar: []*Test2{new(Test2)}},
-			out: fromSingleError([]interface{}{"Bar", 0}, dummy),
+			out: fromSingleError([]interface{}{"Bar", 0}, errDummy),
 		},
 		{
 			in:  Test7{Bar: []*Test2{new(Test2)}},
 			src: "json",
-			out: fromSingleError([]interface{}{"json", 0}, dummy),
+			out: fromSingleError([]interface{}{"json", 0}, errDummy),
 		},
 		{
 			in:  Test7{Bar: []*Test2{new(Test2)}},
 			src: "yaml",
-			out: fromSingleError([]interface{}{"yaml", 0}, dummy),
+			out: fromSingleError([]interface{}{"yaml", 0}, errDummy),
 		},
 	}
 	for i, test := range tests {
